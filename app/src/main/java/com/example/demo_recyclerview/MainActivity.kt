@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
         photoAdapter.updateData(photos)
+        //helllll
     }
 
     private fun initView() {
