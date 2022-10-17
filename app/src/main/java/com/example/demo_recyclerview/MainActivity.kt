@@ -2,11 +2,13 @@ package com.example.demo_recyclerview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val photoAdapter = PhotoAdapter()
+    //private val photoAdapter = PhotoAdapter()
+    private val photoListAdapter = PhotoListAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -77,14 +79,33 @@ class MainActivity : AppCompatActivity() {
                 "https://www.nretnil.com/avatar/LawrenceEzekielAmos.png"
             )
         )
-        photoAdapter.updateData(photos)
-        //helllll
+        //photoAdapter.updateData(photos)
+        photoListAdapter.submitList(photos)
     }
 
     private fun initView() {
-        recyclerViewPhotos.adapter = photoAdapter.apply {
+        /*recyclerViewPhotos.adapter = photoAdapter.apply {
             onItemClick = { item, position ->
                 Toast.makeText(this@MainActivity, "Photo($position) : ${item.title}", Toast.LENGTH_SHORT).show()
+            }
+        }*/
+
+        recyclerViewPhotos.adapter = photoListAdapter.apply {
+            onItemClick = { item, position ->
+                Toast.makeText(this@MainActivity, "($position) : ${item.title}", Toast.LENGTH_SHORT).show()
+            }
+            onItemClickDelete = {currentList, position ->
+                val currentListItem = currentList.toMutableList()
+                currentListItem.removeAt(position)
+                submitList(currentListItem)
+                print(position)
+            }
+            onItemClickAdd = { currentList, position ->
+                var currentListItem = currentList.toMutableList()
+                currentListItem.add(position + 1, Photo(13,
+                    "Tran Van Binhssss",
+                    "https://www.nretnil.com/avatar/LawrenceEzekielAmos.png"))
+                submitList(currentListItem)
             }
         }
     }
