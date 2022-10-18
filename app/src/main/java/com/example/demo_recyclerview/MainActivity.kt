@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
-abstract class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     //private val photoAdapter = PhotoAdapter()
-    private val photos: MutableList<Photo>  = mutableListOf()
+    private var photos : MutableList<Photo>? = null
     private val photoListAdapter = PhotoListAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,8 +18,7 @@ abstract class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        //photoAdapter.updateData(photos)
-        val listItem = listOf(
+        photos = mutableListOf(
             Photo(
                 1,
                 "Nguyen Van A",
@@ -81,7 +80,7 @@ abstract class MainActivity : AppCompatActivity() {
                 "https://www.nretnil.com/avatar/LawrenceEzekielAmos.png"
             )
         )
-        photos.addAll(listItem)
+        //photoAdapter.updateData(photos)
         photoListAdapter.submitList(photos)
     }
 
@@ -97,12 +96,12 @@ abstract class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "($position) : ${item.title}", Toast.LENGTH_SHORT).show()
             }
             onItemClickDelete = {position ->
-                photos.removeAt(position)
+                photos?.removeAt(position)
                 submitList(photos)
                 notifyDataSetChanged()
             }
             onItemClickAdd = {position ->
-                photos.add(position, Photo(13,
+                photos?.add(position, Photo(13,
                     "Tran Van Binhssss",
                     "https://www.nretnil.com/avatar/LawrenceEzekielAmos.png"))
                 submitList(photos)
