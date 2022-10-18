@@ -6,8 +6,9 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+abstract class MainActivity : AppCompatActivity() {
     //private val photoAdapter = PhotoAdapter()
+    private val photos: MutableList<Photo>  = mutableListOf()
     private val photoListAdapter = PhotoListAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +18,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        val photos = listOf(
+        //photoAdapter.updateData(photos)
+        val listItem = listOf(
             Photo(
                 1,
                 "Nguyen Van A",
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 "https://www.nretnil.com/avatar/LawrenceEzekielAmos.png"
             )
         )
-        //photoAdapter.updateData(photos)
+        photos.addAll(listItem)
         photoListAdapter.submitList(photos)
     }
 
@@ -94,18 +96,16 @@ class MainActivity : AppCompatActivity() {
             onItemClick = { item, position ->
                 Toast.makeText(this@MainActivity, "($position) : ${item.title}", Toast.LENGTH_SHORT).show()
             }
-            onItemClickDelete = {currentList, position ->
-                val currentListItem = currentList.toMutableList()
-                currentListItem.removeAt(position)
-                submitList(currentListItem)
+            onItemClickDelete = {position ->
+                photos.removeAt(position)
+                submitList(photos)
                 notifyDataSetChanged()
             }
-            onItemClickAdd = { currentList, position ->
-                var currentListItem = currentList.toMutableList()
-                currentListItem.add(position, Photo(13,
+            onItemClickAdd = {position ->
+                photos.add(position, Photo(13,
                     "Tran Van Binhssss",
                     "https://www.nretnil.com/avatar/LawrenceEzekielAmos.png"))
-                submitList(currentListItem)
+                submitList(photos)
                 notifyDataSetChanged()
             }
         }
