@@ -98,14 +98,15 @@ class MainActivity : AppCompatActivity() {
                 val currentListItem = currentList.toMutableList()
                 currentListItem.removeAt(position)
                 submitList(currentListItem)
-                print(position)
+                notifyDataSetChanged()
             }
             onItemClickAdd = { currentList, position ->
                 var currentListItem = currentList.toMutableList()
-                currentListItem.add(position + 1, Photo(13,
+                currentListItem.add(position, Photo(13,
                     "Tran Van Binhssss",
                     "https://www.nretnil.com/avatar/LawrenceEzekielAmos.png"))
                 submitList(currentListItem)
+                notifyDataSetChanged()
             }
         }
     }

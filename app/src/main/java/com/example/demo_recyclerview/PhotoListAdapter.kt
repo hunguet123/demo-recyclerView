@@ -1,6 +1,7 @@
 package com.example.demo_recyclerview
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -19,23 +20,29 @@ class PhotoListAdapter : ListAdapter<Photo, PhotoViewHolder>(DiffCallback()) {
         holder.binData(getItem(position))
         deleteItem(holder)
         addItem(holder)
+
+        holder.itemView.setOnLongClickListener {
+            it.buttonAddItem.visibility = View.VISIBLE
+            it.buttonDelete.visibility = View.VISIBLE
+            true
+        }
     }
 
     private fun addItem(holder: PhotoViewHolder) {
         holder.itemView.buttonAddItem.setOnClickListener {
-            onItemClickAdd(currentList, holder.adapterPosition)
+            onItemClickAdd(currentList, holder.adapterPosition + 1)
         }
     }
 
     private fun deleteItem(holder: PhotoViewHolder) {
         holder.itemView.buttonDelete.setOnClickListener {
-            onItemClickDelete(currentList, holder.adapterPosition)
+            onItemClickDelete(currentList, holder.layoutPosition)
         }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Photo>() {
         override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem?.id == newItem?.id
         }
 
         override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {

@@ -17,15 +17,7 @@ class PhotoViewHolder(itemView: View,
                 onItemClick(it, adapterPosition)
             }
         }
-        itemView.setOnLongClickListener {
-            //nếu itemData rỗng thì không chạy.
-            itemData?.let {
-                //itemView.buttonDelete.visibility = View.VISIBLE
-                //itemView.buttonAddItem.visibility = View.VISIBLE
-                print("onLongClick $adapterPosition")
-            }
-            true
-        }
+
     }
 
     fun binData(photo: Photo) {
@@ -36,7 +28,4 @@ class PhotoViewHolder(itemView: View,
         }
     }
 
-    fun deleteItem() {
-
-    }
 }
